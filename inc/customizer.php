@@ -98,7 +98,7 @@ $wp_customize->add_setting( 'employee_ofmonth_setting' , array(
     'transport' => 'refresh',
 ) );
 $args = array(
-    'posts_per_page' => -1,
+    'posts_per_page' => -1,// giving us every single one
     'post_type' => 'staff',
 );
 $allPosts = get_posts($args);
