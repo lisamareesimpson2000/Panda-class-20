@@ -10,7 +10,7 @@
     ?>
     <?php 
         $args = array(
-            'p' => get_theme_mod('featured_post_setting')
+            'p' => $featuredPostID
         );
         $featuredPost = new WP_Query($args);
 
@@ -37,8 +37,6 @@
          <?php endif; ?>
 
      <?php endif; ?>
-
-
 
 <!-- sidebar -->
 
@@ -191,6 +189,7 @@
          <?php endif; ?>
 
      <?php endif; ?>
+
 
 
 <?php get_footer(); ?>

@@ -15,6 +15,13 @@ function add_custom_files(){
 add_action('wp_enqueue_scripts', 'add_custom_files');
 //not closing php
 
+//this is to style the admin (changing background of posts colour etc)
+function add_admin_styles(){
+    wp_enqueue_style('my_admin_styles', get_template_directory_uri() . '/assets/css/admin.css' , array(), '0.1');
+}
+add_action('admin_enqueue_scripts', 'add_admin_styles');
+
+
 function register_my_menu() {
     register_nav_menu('header_menu','The menu which appears at the top of the page');
     register_nav_menu('footer_menu','The menu which appears at the bottom of the page');
@@ -88,3 +95,5 @@ add_action('widgets_init', 'unregister_default_widgets', 11);
 require get_template_directory() . '/inc/custom_post_types.php';
 
 require get_template_directory() . '/inc/customizer.php';
+
+require get_template_directory() . '/inc/custom_fields.php';

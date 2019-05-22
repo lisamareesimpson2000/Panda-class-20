@@ -100,8 +100,6 @@ $wp_customize->add_setting( 'employee_ofmonth_setting' , array(
 $args = array(
     'posts_per_page' => -1,
     'post_type' => 'staff',
-    // 'topEmployee' => '',
-    // 'category_name'    => 'Employee of the month',
 );
 $allPosts = get_posts($args);
 $optionsEmployee = array();

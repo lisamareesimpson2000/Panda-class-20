@@ -1,0 +1,10 @@
+/* body{
+    background-color: blueviolet;
+} */
+
+.inputField{
+    width: 100%;
+    line-height: 20px;
+    border: 1px solid grey;
+
+}
