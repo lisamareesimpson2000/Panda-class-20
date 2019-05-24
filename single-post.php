@@ -29,7 +29,7 @@
                     <?php endif; ?>
                     
                     <?php
-                        if (get_post_meta(get_the_ID(),'price', true)){
+                        if (get_post_meta(get_the_ID(),'extra_content', true)){
                             $extra_content = get_post_meta(get_the_ID(),'extra_content', true);
                         }
                     ?>

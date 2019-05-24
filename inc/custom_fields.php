@@ -3,7 +3,7 @@
 $metaboxes = array(
     'post_meta' => array(
         'title' => 'Extra Post Information',
-        'post_type' => 'post',
+        'post_type' => 'event',
         'fields' => array(
             'location' => array(
                 'title' => 'Post Location',
@@ -27,6 +27,7 @@ $metaboxes = array(
                 'description' => '',
                 'choices' => array('left', 'right')
             )
+        
         )
     ),
     'page_meta' => array(
@@ -36,7 +37,30 @@ $metaboxes = array(
     'events_meta' => array(
         'title' => 'Extra Event Information',
         'post_type' => 'event'
+    ),
+    'post_formats_meta' => array(
+        'title' => 'Post Formats Fields',
+        'post_type' => 'post',
+        'fields' => array(
+            'video_link' => array(
+                'title' => 'Video Link',
+                'type' => 'text',
+                'condition' => 'video'
+            ),
+            'audio_link' => array(
+                'title' => 'Audio Link',
+                'type' => 'text',
+                'condition' => 'audio'
+            ),
+            'image_url' => array(
+                'title' => 'Image URL',
+                'type' => 'text',
+                'condition' => 'image'
+            )
+
+        )
     )
+
 );
 
 function create_custom_meta_boxes(){
@@ -66,11 +90,20 @@ function output_custom_meta_box($post, $metabox){
 
     if($fields){
         foreach ($fields as $fieldID => $field) {
+
+            if(isset($field['condition'])){
+                $condition = 'class="conditionalField" data-condition="'.$field['condition'].'" ';
+            } else {
+                $condition = '';
+            }
+
             switch($field['type']){
                 case 'text':
                     // echo $customValues[$fieldID][0];
+                    echo '<div id="'.$fieldID.'" '.$condition.' >';
                     echo '<label>'.$field['title'].'</label>';
                     echo '<input type="text" name="'.$fieldID.'" class="inputField" value="'.$customValues[$fieldID][0].'">';
+                    echo '</div>';
                 break;
                 case 'number':
                     
@@ -89,10 +122,10 @@ function output_custom_meta_box($post, $metabox){
                     echo '<select name="'.$fieldID.'" class="inputField customSelect">';
                         echo '<option class="customSelect"> -- Please Enter a value -- </option>';
                         foreach($field['choices'] as $choice){
-                            // if($choice){
-                            //     echo 'right';
-                            // } else:($choice){
+                            // if($choice = 'left'){
                             //     echo 'left';
+                            // } else:($choice){
+                            //     echo 'right';
                             // }
                             echo '<option class="customSelect" value="'.$choice.'">'.$choice.'</option>';
                         }
