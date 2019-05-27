@@ -11,6 +11,25 @@ function add_custom_files(){
     wp_enqueue_script('jquery');
 
     wp_enqueue_script('my_bootstrap_script', get_template_directory_uri() . '/assets/js/bootstrap.js', array(), '4.3.1', true);
+
+    wp_enqueue_script('show_more_posts', get_template_directory_uri() . '/assets/js/showMore.js', array(jquery), '0.1', true);
+
+    global $wp_query;
+    
+    $currentPage = get_query_var('paged');
+    //var_dump($curentPage);
+   
+    if($currentPage == 0){
+        $currentPage = 1;
+    };
+
+    // die();
+
+    wp_localize_script('show_more_posts', 'load_more', array(
+        'ajax_url' => site_url() . '/wp-admin/admin-ajax.php',
+        'query' => json_encode($wp_query->query_vars),
+        'max_page' => $wp_query->max_num_pages
+    ));
 };
 add_action('wp_enqueue_scripts', 'add_custom_files');
 //not closing php
@@ -39,6 +58,7 @@ function add_admin_styles(){
     // // var_dump($_GET['get_post_format']);
     // // die();
     // }
+
 }
 add_action('admin_enqueue_scripts', 'add_admin_styles');
 

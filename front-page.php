@@ -53,16 +53,51 @@
         }
      ?>
 
-    <div class="row mb-5">
+    <!-- <div class="row mb-5">
 
-        <?php if( have_posts() ): ?>
-            <div class="col <?php echo $contentorder; ?>">
-                <div class="card-deck">
-                <?php while( have_posts() ): the_post() ?>
-                    <?php get_template_part( 'content', get_post_format() ); ?>
-                <?php endwhile; ?>
+        <?php //if( have_posts() ): ?>
+            <div class="col <?php //echo $contentorder; ?>">
+                <div class="row">
+                    <?php //while( have_posts() ): the_post() ?>
+                        <?php //get_template_part( 'content', get_post_format() ); ?>
+                    <?php //endwhile; ?>
+                </div>
+           
+
+                <?php
+                    // $totalPosts = wp_count_posts('post')->publish;
+                    // $maxToShow = get_option('posts_per_page');
+                ?>
+                <?php //if($totalPosts > $maxToShow): ?>
+                <!-- <button id="showMore" type="button" name="button" class="btn btn-block btn-primary">Show more Posts</button>
+            </div> -->
+        <?php //endif; ?>
+
+        <?php //if( is_active_sidebar('sidebar-1') ): ?>
+            <!-- <div class="col-3 <?php //echo $sidebarOrder; ?> ">
+                <div class="card bg-light p-3"> -->
+                    <!-- <?php //dynamic_sidebar('sidebar-1'); ?> -->
                 </div>
             </div>
+        <?php //endif; ?>
+    </div>
+    <div class="row mb-5">
+        <?php if( have_posts() ): ?>
+            <div class="col <?php echo $contentorder; ?>">
+                <div class="row">
+                    <?php while( have_posts() ): the_post() ?>
+                        <?php get_template_part( 'content', get_post_format() ); ?>
+                    <?php endwhile; ?>
+                </div>
+                <?php
+                    $totalPosts = wp_count_posts('post')->publish;
+                    $maxToShow = get_option('posts_per_page');
+                ?>
+                <?php if($totalPosts > $maxToShow):  ?>
+                    <button id="showMore" type="button" name="button" class="btn btn-block btn-primary">Show more Posts</button>
+                <?php endif; ?>
+            </div>
+
         <?php endif; ?>
 
         <?php if( is_active_sidebar('sidebar-1') ): ?>
@@ -72,13 +107,7 @@
                 </div>
             </div>
         <?php endif; ?>
-
-
-
-
-
     </div>
-
 
 
 
