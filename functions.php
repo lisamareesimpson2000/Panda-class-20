@@ -18,17 +18,15 @@ function add_custom_files(){
     
     $currentPage = get_query_var('paged');
     //var_dump($curentPage);
-   
     if($currentPage == 0){
         $currentPage = 1;
     };
-
     // die();
-
     wp_localize_script('show_more_posts', 'load_more', array(
         'ajax_url' => site_url() . '/wp-admin/admin-ajax.php',
         'query' => json_encode($wp_query->query_vars),
-        'max_page' => $wp_query->max_num_pages
+        'max_page' => $wp_query->max_num_pages,
+        'current_page' => $currentPage
     ));
 };
 add_action('wp_enqueue_scripts', 'add_custom_files');
@@ -42,8 +40,6 @@ function add_admin_styles(){
     wp_enqueue_style('my_admin_styles', get_template_directory_uri() . '/assets/css/admin.css' , array(), '0.1');
 
     $screen = get_current_screen();
-    // var_dump($screen);
-    // die();
     if($screen->post_type === 'post' && ($screen->action === 'add' || $_GET['action'] === 'edit')){
         wp_enqueue_script('change_post_formats_script', get_template_directory_uri() . '/assets/js/change_post_formats.js' , array('jquery'), '0.1', true);
         $format = get_post_format($_GET['post']);
@@ -53,12 +49,6 @@ function add_admin_styles(){
             // 'message' => 'this coming from functions.php'
         )); 
     }
-    // if($screen->post_type === 'post' && $_GET['action'] === 'edit'){
-
-    // // var_dump($_GET['get_post_format']);
-    // // die();
-    // }
-
 }
 add_action('admin_enqueue_scripts', 'add_admin_styles');
 
@@ -141,3 +131,40 @@ require get_template_directory() . '/inc/custom_post_types.php';
 require get_template_directory() . '/inc/customizer.php';
 
 require get_template_directory() . '/inc/custom_fields.php';
+
+function show_more_posts_on_front_page(){ //needs info to run the query
+    $args = json_decode()(stripslashes($_POST['query']), true);
+    $args ['paged'] = $_POST['page'] + 1;
+    $args['post_status'] = 'publish';
+    query_posts($args);
+
+    if(have_posts()){
+        while(have_posts()){
+            the_post();
+            get_template_part('content', get_posts_format());
+        }
+    }
+    die();
+}
+add_action('wp_ajax_loadmore', 'show_more_posts_on_front_page');
+add_action('wp_ajax__nopriv_loadmore', 'show_more_posts_on_front_page'); //they don't need to be an admin to do this
+
+// function show_more_posts_on_front_page(){
+
+//     $args = json_decode( stripslashes($_POST['query']), true );
+//     $args['paged'] = $_POST['page'] + 1;
+//     $args['post_status'] = 'publish';
+
+//     query_posts($args);
+
+//     if(have_posts()){
+//         while(have_posts()){
+//             the_post();
+//             get_template_part('content', get_post_format());
+//         }
+//     }
+//     die();
+
+// }
+// add_action('wp_ajax_loadmore', 'show_more_posts_on_front_page');
+// add_action('wp_ajax_nopriv_loadmore', 'show_more_posts_on_front_page');
