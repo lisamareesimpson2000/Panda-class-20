@@ -50,3 +50,11 @@ body{
 #wp-calendar tbody .pad { background: none; }
 #wp-calendar tfoot #next { font-size: 10px; text-transform: uppercase; text-align: right; }
 #wp-calendar tfoot #prev { font-size: 10px; text-transform: uppercase; padding-top: 10px; }
+
+/* WOOCOMMERCE */
+select{
+    width: 220px;
+    height: 40px;
+    color: white;
+    background-color: darkslategray;
+}
