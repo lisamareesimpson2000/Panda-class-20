@@ -69,3 +69,36 @@ function add_staff_post_type(){
     register_post_type('staff', $args);
 }
 add_action('init', 'add_staff_post_type');
+
+function add_enquiry_post_type(){
+
+	$labels = array(
+		'name'	=> _x( 'Contact', 'post type general name', '18wdwu07Panda'),
+		'singular name' => _x( 'Contact', 'post type singular name', '18wdwu07Panda'),
+		'menu_name'          => _x( 'Contact', 'admin menu', '18wdwu07Panda' ),
+		'name_admin_bar'     => _x( 'Contact', 'add new on admin bar', '18wdwu07Panda' ),
+		'add_new'            => _x( 'Add New', 'contact', '18wdwu07Panda' ),
+		'add_new_item'       => __( 'Add New Contact', '18wdwu07Panda' ),
+		'new_item'           => __( 'New Contact', '18wdwu07Panda' ),
+		'edit_item'          => __( 'Edit Contact', '18wdwu07Panda' ),
+		'view_item'          => __( 'View Contact', '18wdwu07Panda' ),
+		'all_items'          => __( 'All Contact', '18wdwu07Panda' ),
+		'search_items'       => __( 'Search Contact', '18wdwu07Panda' ),
+		'parent_item_colon'  => __( 'Parent Contact:', '18wdwu07Panda' ),
+		'not_found'          => __( 'No contacts found.', '18wdwu07Panda' ),
+		'not_found_in_trash' => __( 'No contacts found in Trash.', '18wdwu07Panda' )
+
+	);
+
+	$args = array(
+		'labels' => $labels,
+		'description' => 'A list of enquiry messages which will be held in the database',
+		'public' => true,
+		'show_in_nav_menus' => true,
+		'menu_position' => 6,
+		'menu_icon' => 'dashicons-email-alt2',
+		'supports' => array('title', 'editor', 'author')
+	);
+	register_post_type('Contact', $args);
+}
+add_action('init', 'add_enquiry_post_type');

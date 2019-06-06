@@ -168,3 +168,42 @@ add_action('wp_ajax__nopriv_loadmore', 'show_more_posts_on_front_page'); //they 
 // }
 // add_action('wp_ajax_loadmore', 'show_more_posts_on_front_page');
 // add_action('wp_ajax_nopriv_loadmore', 'show_more_posts_on_front_page');
+
+// function admin_bar(){
+
+//     if(is_user_logged_in()){
+//       add_filter( 'show_admin_bar', '__return_true' , 1000 );
+//     }
+//   }
+//   add_action('init', 'admin_bar' );
+
+
+function save_enquiry_meta( $post_id, $post, $update ) {
+
+    /*
+     * In production code, $slug should be set only once in the plugin,
+     * preferably as a class property, rather than in each function that needs it.
+     */
+    $post_type = get_post_type($post_id);
+
+    // If this isn't a 'book' post, don't update it.
+    if ( "book" != $post_type ) return;
+
+    // - Update the post's metadata.
+
+    if ( isset( $_POST['book_author'] ) ) {
+        update_post_meta( $post_id, 'book_author', sanitize_text_field( $_POST['book_author'] ) );
+    }
+
+    if ( isset( $_POST['publisher'] ) ) {
+        update_post_meta( $post_id, 'publisher', sanitize_text_field( $_POST['publisher'] ) );
+    }
+
+    // Checkboxes are present if checked, absent if not.
+    if ( isset( $_POST['inprint'] ) ) {
+        update_post_meta( $post_id, 'inprint', TRUE );
+    } else {
+        update_post_meta( $post_id, 'inprint', FALSE );
+    }
+}
+add_action( 'save_post', 'save_book_meta', 10, 3 );
