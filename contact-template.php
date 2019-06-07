@@ -5,7 +5,7 @@
 
     if($_POST){
         $errors = array();
-            //if(wp_verify_nonce)
+        if(wp_verify_nonce($_POST['_wpnonce'], 'wp_enquiery_form')){
         if(!$_POST['enquiryFname']){
             array_push($errors, 'your first name is required');
         }
@@ -36,7 +36,7 @@
 
     } else{
         array_push($errors,'something went wrong with submitting the form');
-    //}
+    }
 
 }
 
@@ -55,13 +55,39 @@
 
         <div class="row">
             <div class="col">
-                <h1> <?php //the_content();?> </h1> 
+                <div class="wp_content">
+                    <?php the_content();?>
+                </div>
+            </div>
+        </div>
+
+        <?php if($_POST && !empty($errors)):?>
+            <div class="row">
+                <div class="col">
+                    <div class="alert alert-danger">
+                        <ul>
+                            <?php foreach($errors as $singleError):?>
+                                <li><?php echo $singleError;?></li>
+                            <?php endforeach;?>
+                        </ul>   
+                    </div>
+                </div>
+            </div>
+            <?php endif;?>
 
         <?php if($_POST && !empty($errors)):?>
         <!-- alert message goes here -->
         <?php endif;?> 
 
-        
+            <?php if($_POST && empty($errors)):?>
+                <div class="row">
+                    <div class="col">
+                        <div class="alert alert-success"> 
+                            <p> Cool, you sent the form. </p>
+                        </div>
+                    </div>
+                </div>
+        <?php else: ?>
             <div class="col-md-3">
                 <div class="contact-info">
                     <img src="https://image.ibb.co/kUASdV/contact-image.png" alt="image"/>

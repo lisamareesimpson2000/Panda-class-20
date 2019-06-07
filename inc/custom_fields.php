@@ -56,7 +56,18 @@ $metaboxes = array(
                 'title' => 'Image URL',
                 'type' => 'text',
                 'condition' => 'image'
+            ),
+            'newImage' => array(
+                'title' => 'Upload an image',
+                'type' => 'image',
+                'condition' => 'image'
             )
+            //,
+            // 'newImage2' => array(
+            //     'title' => 'Upload an image',
+            //     'type' => 'image',
+            //     'condition' => 'image'
+            // )
 
         )
     )
@@ -92,9 +103,9 @@ function output_custom_meta_box($post, $metabox){
         foreach ($fields as $fieldID => $field) {
 
             if(isset($field['condition'])){
-                $condition = 'class="conditionalField" data-condition="'.$field['condition'].'" ';
+                $condition = 'class=" formBlock conditionalField" data-condition="'.$field['condition'].'" ';
             } else {
-                $condition = '';
+                $condition = 'class="formBlock"';
             }
 
             switch($field['type']){
@@ -131,6 +142,21 @@ function output_custom_meta_box($post, $metabox){
                         }
                     echo '</select>';
                     //if statement needed
+                break;
+                case 'image':
+                if(get_post_meta($post->ID, $field, true)){
+                    $imageID = get_post_meta($post->ID, $field, true);
+                    $imageURL = wp_get_attachment_image_src($imageID, 'small');
+                }
+                    echo '<div id="'.$fieldID.'" '.$condition.' >';
+                        echo '<label for="'.$fieldID.'">'.$field['title'].'</label>';
+                        echo '<input type="hidden" name="'.$fieldID.'" readonly value="'.$customValues[$fieldID][0].'" class="hiddenImageID">'; //read only stops people adding in something that we dont ant, security
+                        if(get_post_meta($post->ID, $fieldID, true)){
+                            echo '<img src="'.$imageURL[0].'">';
+                            echo '<button class="">Remove Image </button>';
+                        }
+                        echo '<button class="setCustomImage">Add Image </button>';
+                    echo '</div>';
                 break;
                 default:
                     echo $customValues[$fieldID][0];

@@ -1,8 +1,8 @@
 <?php get_header(); ?>
 
     <?php
-    $name = $_POST['name'];
-    $purchase = $_POST['submit'];
+    // $name = $_POST['name'];
+    // $purchase = $_POST['submit'];
     //here some database magic happens
     ?>
 
