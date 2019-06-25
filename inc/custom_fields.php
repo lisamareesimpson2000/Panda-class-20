@@ -1,5 +1,9 @@
 <?php
 
+    // var_dump($staffNames);
+    // die();
+
+
 $metaboxes = array(
     'post_meta' => array(
         'title' => 'Extra Post Information',
@@ -36,8 +40,23 @@ $metaboxes = array(
     ),
     'events_meta' => array(
         'title' => 'Extra Event Information',
-        'post_type' => 'event'
+        'post_type' => 'event',
+        'fields' => array(
+            'featuredStaffMember' => array(
+                'title' => 'Who is the Staff Member in charge?',
+                'type' => 'selectPosts',//'select
+                'selectType' => 'staff'
+                //'choices' => $staffNames
+            )
+        )
     ),
+    'staff_meta' => array(
+        'title' => 'Extra Page Information',
+        'post_type' => 'staff',
+        'fields' => array(
+            
+        )
+    ), //sub services, related to hair dressing haircuts . might be helpful for adding colour or extra services
     'post_formats_meta' => array(
         'title' => 'Post Formats Fields',
         'post_type' => 'post',
@@ -156,6 +175,37 @@ function output_custom_meta_box($post, $metabox){
                             echo '<button class="">Remove Image </button>';
                         }
                         echo '<button class="setCustomImage">Add Image </button>';
+                    echo '</div>';
+                break;
+                case 'selectPosts': //Hair sub services
+                if(get_post_meta($post->ID, $fieldID, true)){
+                    //var_dump (get_post_meta($post->ID, $fieldID, true));
+                    $savedPostID = get_post_meta($post->ID, $fieldID, true);
+                   
+                } 
+                $args = array(
+                    'posts_per_page' => -1,
+                    'post_type' => $field['selectType']
+                );
+                $allPosts = get_posts($args);
+                // $staffNames = array();
+             
+                    echo '<div id="'.$fieldID.'" '.$condition.' >';
+              
+                    echo '<label for="'.$fieldID.'">'.$field['title'].'</label>';
+                    echo '<select name="'.$fieldID.'" class="inputField customSelect">';
+                    echo '<option> -- Please Enter a value -- </option>';
+                    foreach ($allPosts as $singlePost){
+                            if($savedPostID == $singlePost->ID){
+                                $selected = 'selected="selected"';
+                            } else {
+                                $selected = '';
+                            }
+
+                        echo '<option '.$selected.' value="'.$singlePost->ID.'">'.$singlePost->post_title.'</option>';
+
+                    } //this will render only when we are on the right post
+                    echo '</select>';
                     echo '</div>';
                 break;
                 default:

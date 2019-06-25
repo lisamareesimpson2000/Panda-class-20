@@ -96,18 +96,18 @@
                 </div>
             </div>
             <div class="col-md-9">
-                <div action=" <?php echo get_permalink();?>" method="post" class="contact-form">
+                <form action=" <?php echo get_permalink();?>" method="post" class="contact-form">
                     <?php wp_nonce_field('wp_enquiery_form'); ?>
                     <div class="form-group">
                     <label class="control-label col-sm-2" for="fname">First Name:</label>
                     <div class="col-sm-10">          
-                        <input type="text" class="form-control" id="fname" placeholder="Enter First Name" name="enquiryFname" value="<?php echo $_POST['enquiriesName']?>">
+                        <input type="text" class="form-control" id="fname" placeholder="Enter First Name" name="enquiryFname" value="<?php echo $_POST['enquiryFname']?>">
                     </div>
                     </div>
                     <div class="form-group">
                     <label class="control-label col-sm-2" for="lname">Last Name:</label>
                     <div class="col-sm-10">          
-                        <input type="text" class="form-control" id="lname" placeholder="Enter Last Name" name="enquiryLname">
+                        <input type="text" class="form-control" id="lname" placeholder="Enter Last Name" name="enquiryLname" value="<?php echo $_POST['enquiryLname']?>">
                     </div>
                     </div>
                     <div class="form-group">
@@ -124,10 +124,10 @@
                     </div>
                     <div class="form-group">        
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button id="enquiry-submit" type="submit" class="btn btn-default" name="submit" value="enquiry">Submit</button>
+                        <button id="enquiry-submit" type="submit" class="btn btn-secondary" name="submit" value="enquiry">Submit</button>
                     </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
         <?php endif;?>
